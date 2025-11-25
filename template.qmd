@@ -1,0 +1,503 @@
+---
+title: "Task1"
+author: "richard seidl"
+date: "21/10/2025"
+format:
+  html:
+    embed-resources: true
+editor: source
+---
+
+## Question 1 title
+
+Bratislavský kraj
+
+```{r}
+# code for solving task
+#numeric
+population <- 736385
+area_size <- 2053.0
+average_altitude <- 152.7
+average_income <- 1650.75
+
+#integer
+number_of_municipalities <- 73 
+number_of_districts <- 8 
+population <- 719537
+number_of_universities <- 6
+
+# logical
+has_international_airport <- TRUE
+borders_with_other_country <- TRUE
+
+# character
+region_name <- "Bratislavský_kraj"
+capital_city <- "Bratislava"
+region_type <- "Metropolitný"
+
+```
+
+
+## Question 2 title
+
+Vectors
+
+```{r}
+# code for solving task
+#numeric 
+numeric_vector <- c(population, area_size, average_altitude, average_income, number_of_municipalities, number_of_districts, population, number_of_universities)
+
+#sequence 
+sequence_vector <- seq(from = 20, to = 100, by = 5)
+
+#logical 
+logical_vector <- sample(c(TRUE, FALSE), size = 10, replace = TRUE)
+
+```
+
+
+## Question 3 title
+
+Matrix
+
+```{r}
+# code for solving task
+#numeric 
+matrix_bratislava <- matrix(sample(-50:50, 9, replace = TRUE), nrow = 3, ncol = 3)
+
+#row and column names
+rownames(matrix_bratislava) <- c("Districts", "Municipalities", "Universities")
+colnames(matrix_bratislava) <- c("2023", "2024", "2025")
+
+#logical averages
+row_averages <- rowMeans(matrix_bratislava)
+col_averages <- colMeans(matrix_bratislava)
+
+```
+
+
+## Question 4 title
+
+List
+
+```{r}
+# code for solving task
+#list
+bratislava_list <- list(
+
+#atomic variables
+population = population,
+area_size = area_size,
+average_altitude = average_altitude,
+average_income = average_income,
+number_of_municipalities = number_of_municipalities,
+number_of_districts = number_of_districts,
+number_of_universities = number_of_universities,
+has_international_airport = has_international_airport,
+borders_with_other_country = borders_with_other_country,
+region_name = region_name,
+capital_city = capital_city,
+region_type = region_type,
+
+#vectors
+numeric_vector = numeric_vector,
+sequence_vector = sequence_vector,
+logical_vector = logical_vector,
+
+#matrix
+matrix_bratislava = matrix_bratislava,
+row_averages = row_averages,
+col_averages = col_averages,
+
+#extra element
+description = "Bratislavský kraj je najmenší, ale najrozvinutejší kraj Slovenska, s hlavným mestom Bratislavou a bohatou históriou."
+)
+
+```
+
+
+## Question 5 title
+
+Factor
+
+```{r}
+# code for solving task
+#factor
+development_level <- factor(c("high", "high", "medium", "high", "medium", "high"),
+levels = c("low", "medium", "high"))
+
+```
+
+
+## Question 6 title
+
+Data Frame
+
+```{r}
+# code for solving task
+#data frame
+bratislava_df <- data.frame(
+district_name = c("Bratislava I", "Bratislava II", "Bratislava III",
+"Bratislava IV", "Bratislava V", "Malacky",
+"Pezinok", "Senec"),
+population = c(41000, 83000, 61000, 95000, 64000, 73000, 68000, 72000),
+area_km2 = c(10, 50, 75, 96, 45, 949, 375, 359),
+has_industry = c(TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, FALSE, FALSE)
+)
+
+#rename columns
+colnames(bratislava_df) <- c("District", "Population", "Area_km2", "Has_Industry")
+
+#display structure and summary
+str(bratislava_df)
+summary(bratislava_df)
+
+#add new column derived from others (population density)
+bratislava_df$Density <- bratislava_df$Population / bratislava_df$Area_km2
+
+bratislava_df
+
+```
+
+
+
+
+
+
+
+
+## Task 2: Subsetting & Missing Data
+
+### Inicializácia
+```{r}
+# code for solving task
+sequence_vector <- seq(from = 20, to = 100, by = 5)
+logical_vector <- c(TRUE, FALSE, TRUE, TRUE, FALSE, FALSE, TRUE, FALSE, TRUE, FALSE)
+
+bratislava_df <- data.frame(
+  region = c("Bratislava I", "Bratislava II", "Bratislava III", "Bratislava IV", "Bratislava V"),
+  population = c(45000, 95000, 65000, 90000, 80000),
+  area_km2 = c(10, 50, 40, 100, 80),
+  is_habitable = c(TRUE, TRUE, TRUE, TRUE, FALSE),
+  stringsAsFactors = FALSE
+)
+
+universe_list <- list(
+  description = "Bratislavský kraj - hlavný a najmenší kraj Slovenska",
+  numbers = sequence_vector,
+  matrix3x3 = matrix(sample(-50:50, 9, replace = TRUE), nrow = 3),
+  logicals = logical_vector
+)
+```
+
+### 2.1. Querying Vectors
+```{r}
+# code for solving task
+    # 2.1.1. Sequence vector
+        sequence_vector[3]                # 3rd element
+        sequence_vector[2:5]              # elements 2 through 5
+        sequence_vector[sequence_vector > 20]   # values greater than 20
+    
+    # 2.1.2. Logical vector
+        logical_vector[logical_vector]    # only TRUE values
+        which(logical_vector)             # indices of TRUE values
+```
+
+### 2.2. Querying Your "Universe" List
+```{r}
+# code for solving task
+    # using the $ operator
+        universe_list$description
+    
+    # matrix [[ ]]  (access the 3x3 matrix stored in the list)
+        universe_list[["matrix3x3"]]
+    
+    # second element from the vector element within the list
+        universe_list[["numbers"]][2]
+```
+
+### 2.3. Investigating Your Data Frame
+```{r}
+# code for solving task
+    # first 3 rows
+        head(bratislava_df, 3)
+    
+    # 4th row, 1st column
+        bratislava_df[4, 1]
+    
+    # contains logical value column
+        bratislava_df$is_habitable
+```
+
+### 2.4. Handling "Corrupted" Data (NA)
+```{r}
+# code for solving task
+    # copying data
+        df_corrupted <- bratislava_df
+    
+    # introduce 3 NAs
+        df_corrupted[2, 3] <- NA
+        df_corrupted[4, 2] <- NA
+        df_corrupted[5, 4] <- NA
+        
+    # count NA
+        sum(is.na(df_corrupted))
+    
+    # count NA per column
+        colSums(is.na(df_corrupted))
+    
+    # mean of population with NA
+        mean(df_corrupted$population)
+    
+    # mean of population without NA
+    mean(df_corrupted$population, na.rm = TRUE)
+    
+    # remove NA
+    df_clean <- na.omit(df_corrupted)
+    df_clean
+```
+
+### 2.5. Bonus Challenge: which()
+```{r}
+# code for solving task
+    # highest population
+    highest_pop_index <- which.max(bratislava_df$population)
+    bratislava_df[highest_pop_index, ]
+    
+    # lowest area
+    lowest_area_index <- which.min(bratislava_df$area_km2)
+    bratislava_df[lowest_area_index, ]
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Task 3: Expanding Your Universe
+```{r}
+# code for solving task
+# Data from: https://simplemaps.com/data/world-cities
+```
+
+### 3.1. Loading Libraries
+```{r}
+# code for solving task
+library(dplyr)
+library(readr)
+```
+
+### 3.2. Importing the Dataset
+```{r}
+# code for solving task
+# Load the real dataset (must be located in your project directory)
+my_real_data <- read_csv("worldcities.csv")
+
+# First inspection
+glimpse(my_real_data)
+head(my_real_data)
+summary(my_real_data)
+```
+
+## 3.3. dplyr Exploration
+```{r}
+# code for solving task
+# You must ask and answer 5 questions about the dataset.
+
+# Question 1
+# Which 5 cities have the highest population?
+        my_real_data |> 
+          select(city, country, population) |> 
+          arrange(desc(population)) |> 
+          head(5)
+
+
+# Question 2
+# What is the average population per country?
+        my_real_data |> 
+          group_by(country) |> 
+          summarise(avg_population = mean(population, na.rm = TRUE)) |> 
+          arrange(desc(avg_population))
+
+
+# Question 3 - number of cities per country
+        my_real_data |> 
+          group_by(country) |> 
+          summarise(city_count = n()) |> 
+          arrange(desc(city_count))
+
+
+# Question 4
+# Create a fake population density (population / random area_km2) and show 10 densest cities.
+        my_real_data |> 
+          filter(!is.na(population)) |> 
+          mutate(area_km2 = runif(n(), min = 50, max = 1000),  # náhodná plocha len pre ukážku
+                 density = population / area_km2) |> 
+          select(city, country, density) |> 
+          arrange(desc(density)) |> 
+          head(10)
+        
+
+# Question 5
+# Find all European cities with population over 1 million.
+# We create a 'continent' column using the countrycode package
+
+        library(countrycode)
+        
+        my_real_data <- my_real_data |> 
+          mutate(continent = countrycode(sourcevar = country, origin = "country.name", destination = "continent"))
+        
+        my_real_data |> 
+          filter(continent == "Europe", population > 1000000) |> 
+          select(city, country, population) |> 
+          arrange(desc(population))
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### Task 4 — Toolkit for Your Universe
+
+# 4.1 — Greeting Function
+```{r}
+# code for solving task
+        welcome_to_my_universe <- function(your_name, universe_name) {
+          cat("----------------------------------------\n")
+          cat("Welcome to the Analysis Toolkit for:", universe_name, "\n")
+          cat("Report prepared by:", your_name, "\n")
+          cat("----------------------------------------\n\n")
+        }
+        
+        # Call the function
+        welcome_to_my_universe("Richard Seidl", "World Cities Dataset")
+```
+
+
+# 4.2 — Loading and Inspecting Function
+```{r}
+library(readr)
+library(dplyr)
+```
+
+
+```{r}
+# code for solving task
+        load_and_inspect <- function(file_path) {
+          
+         
+          
+          data <- read_csv(file_path)
+          
+          cat("\n=== Data Loaded Successfully ===\n")
+          cat("File:", file_path, "\n\n")
+          
+          cat("--- Structure (glimpse) ---\n")
+          print(glimpse(data))
+          
+          cat("\n--- First 6 Rows ---\n")
+          print(head(data))
+          
+          return(data)
+        }
+        
+        # Load worldcities dataset
+        my_data <- load_and_inspect("worldcities.csv")
+```
+
+
+# 4.3 — Query Function
+```{r}
+# code for solving task
+        filter_cities_by_population <- function(data, pop_threshold) {
+          result <- data |>
+            filter(population > pop_threshold) |>
+            select(city, country, population) |>
+            arrange(desc(population))
+          
+          return(result)
+        }
+        
+        # Call the function
+        cities_over_5m <- filter_cities_by_population(my_data, 5000000)
+        cities_over_5m
+```
+
+
+# 4.4 — Reporting Function
+```{r}
+# code for solving task
+        generate_report <- function(data, country_name) {
+          
+          country_data <- data |>
+            filter(country == country_name)
+          
+          if (nrow(country_data) == 0) {
+            cat("No data found for:", country_name, "\n")
+            return(NULL)
+          }
+          
+          avg_population <- mean(country_data$population, na.rm = TRUE)
+          max_population <- max(country_data$population, na.rm = TRUE)
+          min_population <- min(country_data$population, na.rm = TRUE)
+          city_count <- nrow(country_data)
+          
+          cat("\n=============================\n")
+          cat("      REPORT FOR", country_name, "\n")
+          cat("=============================\n")
+          cat("Number of Cities:", city_count, "\n")
+          cat("Average Population:", round(avg_population, 2), "\n")
+          cat("Largest City Population:", max_population, "\n")
+          cat("Smallest City Population:", min_population, "\n")
+          cat("=============================\n\n")
+        }
+        
+        # Call the report function
+        generate_report(my_data, "Slovakia")
+        generate_report(my_data, "Germany")
+```
+
+
+
+
