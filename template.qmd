@@ -501,3 +501,120 @@ library(dplyr)
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### TASK 5 — Data Visualization
+
+# Load graphics library
+```{r}
+    library(ggplot2)
+```
+
+# 5.1 — Base R Histogram
+```{r}
+# code for solving task
+    hist(
+    my_data$population,
+    main = "Distribution of City Populations",
+    xlab = "Population",
+    col = "lightblue",
+    border = "white"
+    )
+```
+
+# 5.2 — ggplot2 Scatter Plot
+```{r}
+# code for solving task
+    ggplot(my_data, aes(x = lat, y = population)) +
+    geom_point(alpha = 0.5, size = 2) +
+    geom_smooth() +
+    labs(
+    title = "Population vs Latitude",
+    x = "Latitude",
+    y = "Population"
+    ) +
+    theme_minimal()
+```
+
+# 5.3 — Boxplot Comparison
+```{r}
+# code for solving task
+
+# 1. načítanie balíkov
+  library(ggplot2)
+  library(dplyr)
+
+# 2. načítanie dát
+  my_data <- read.csv("worldcities.csv")
+
+# 3. pridanie kontinentu podľa krajiny
+  continent_map <- list(
+    Africa = c("Nigeria","Egypt","South Africa","Kenya","Morocco","Algeria",
+               "Tanzania","Ghana","Ethiopia","Uganda","Angola","Senegal",
+               "Ivory Coast","Mozambique","Cameroon"),
+    Asia = c("China","India","Japan","South Korea","Indonesia","Saudi Arabia",
+             "Iran","Iraq","Vietnam","Thailand","Philippines","Malaysia",
+             "Pakistan","Bangladesh","Nepal","Israel","Turkey"),
+    Europe = c("Slovakia","Czech Republic","Germany","France","UK","Italy",
+               "Spain","Portugal","Austria","Hungary","Poland","Ukraine",
+               "Romania","Sweden","Norway","Finland","Belgium","Netherlands",
+               "Greece","Switzerland"),
+    North_America = c("United States","Canada","Mexico","Cuba","Dominican Republic"),
+    South_America = c("Brazil","Argentina","Chile","Peru","Colombia","Ecuador","Uruguay"),
+    Oceania = c("Australia","New Zealand","Fiji","Papua New Guinea")
+  )
+  
+  my_data$continent <- NA
+  
+  for (cont in names(continent_map)) {
+    my_data$continent[my_data$country %in% continent_map[[cont]]] <- cont
+  }
+
+# 4. vynechanie riadkov bez kontinentu
+  my_data <- my_data %>% filter(!is.na(continent))
+
+# 5.3 BOX PLOT – populácia podľa kontinentu
+    ggplot(my_data, aes(x = continent, y = population, fill = continent)) +
+      geom_boxplot() +
+      labs(
+        title = "Population Distribution Across Continents",
+        x = "Continent",
+        y = "Population"
+      ) +
+      theme_light() +
+      theme(legend.position = "none")
+```
+
+# 5.4 — Facetted Histogram by Continent
+```{r}
+# code for solving task
+    ggplot(my_data, aes(x = population)) +
+    geom_histogram(bins = 20, fill = "coral", color = "black") +
+    facet_wrap(~ continent) +
+    labs(
+    title = "Population Distribution by Continent",
+    x = "Population",
+    y = "Count"
+    )
+```
+
+# 5.5 — Save Plot
+```{r}
+# code for solving task
+    ggsave("my_universe_plot.png", width = 8, height = 6)
+```
+
+
+
